@@ -9,6 +9,9 @@
 </div>
 
 <div>
+
+    {% include 'includes/paginator_nav.html' %}
+
     <table class="table">
         <thead>
             <tr>
@@ -29,6 +32,9 @@
         {% endfor %}
       </tbody>
     </table>
+
+    {% include 'includes/paginator_nav.html' %}
+
 </div>
 
 {% endblock %}

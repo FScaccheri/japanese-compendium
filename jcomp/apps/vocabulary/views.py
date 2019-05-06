@@ -5,7 +5,7 @@ from jcomp.apps.common.models import Word
 
 class VocabularyListView(ListView):
     model = Word
-    paginate_by = 300
+    paginate_by = 30
     template_name = 'vocabulary_list.html'
 
     # TODO: Create details views
