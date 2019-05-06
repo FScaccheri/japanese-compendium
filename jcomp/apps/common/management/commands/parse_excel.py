@@ -26,11 +26,12 @@ class Command(BaseCommand):
                                                  'but it was correctly added.'))
 
         data = get_data(file_name)
+
         vocabulary_data = data['vocabulary']
         verbs_data = data['verbs']
         adjectives_data = data['adjectives']
         kanji_data = data['kanji']
-
+        
         word_counter = 0
         for word in vocabulary_data:
             new_word = Word(
@@ -40,8 +41,21 @@ class Command(BaseCommand):
             type = word[2] if 2 < len(word) else None
             new_word.source = word[3] if 3 < len(word) else None
             new_word.save()
+            word_counter += 1
 
-        self.stdout.write(self.style.SUCCESS("Successfully created '%s' words" % word_counter))
+        self.stdout.write(self.style.SUCCESS("Successfully created %s words" % word_counter))
+
+        verbs_counter = 0
+        for verb in verbs_data:
+            hiragana = word[1]
+            new_verb = Verb.objects.create(
+                hiragana=hiragana,
+                translation=word[2]
+            )
+            verbs_counter += 1
+
+        adjectives_counter = 0
+
 
         # TODO: >create Words ONLY from words sheet of excel.
         #  >Complete remaining Verb and Adjective fields from other sheets.

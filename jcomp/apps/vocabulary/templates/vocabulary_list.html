@@ -12,8 +12,8 @@
 
     {% include 'includes/paginator_nav.html' %}
 
-    <table class="table">
-        <thead>
+    <table class="table table-bordered table-hover">
+        <thead class="thead-dark">
             <tr>
               <th scope="col">かな</th>
               <th scope="col">いみ</th>
@@ -23,7 +23,7 @@
       </thead>
       <tbody>
         {% for word in object_list %}
-        <tr>
+        <tr class="{{ word.type_color }}">
           <th scope="row">{{ word.hiragana }}</th>
           <td>{{ word.translation }}</td>
           <td>{{ word.type }}</td>
