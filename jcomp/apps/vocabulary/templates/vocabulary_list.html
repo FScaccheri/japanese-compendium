@@ -1,0 +1,34 @@
+{% extends 'base_list.html' %}
+
+{% block title %}<title>J-Comp Vocabulary</title>{% endblock %}
+
+{% block body %}
+
+<div align="center">
+    <h1>ごい</h1>
+</div>
+
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+              <th scope="col">かな</th>
+              <th scope="col">いみ</th>
+              <th scope="col">Tipo</th>
+              <th scope="col">Fuente</th>
+            </tr>
+      </thead>
+      <tbody>
+        {% for word in object_list %}
+        <tr>
+          <th scope="row">{{ word.hiragana }}</th>
+          <td>{{ word.translation }}</td>
+          <td>{{ word.type }}</td>
+          <td>{% if word.source%} {{ word.source }} {% endif %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+</div>
+
+{% endblock %}
