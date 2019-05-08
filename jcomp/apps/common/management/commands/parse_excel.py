@@ -34,25 +34,35 @@ class Command(BaseCommand):
         
         word_counter = 0
         for word in vocabulary_data:
-            new_word = Word(
+            defaults = {'translation': word[1]}
+            # TODO: FIX, get returns 2 models
+            new_word, created = Word.objects.get_or_create(
                 hiragana=word[0],
-                translation=word[1]
+                defaults=defaults
             )
-            type = word[2] if 2 < len(word) else None
-            new_word.source = word[3] if 3 < len(word) else None
-            new_word.save()
-            word_counter += 1
+            if created:
+                type = word[2] if 2 < len(word) else None
+                new_word.source = word[3] if 3 < len(word) else None
+                new_word.save()
+                word_counter += 1
 
         self.stdout.write(self.style.SUCCESS("Successfully created %s words" % word_counter))
 
         verbs_counter = 0
-        for verb in verbs_data:
-            hiragana = word[1]
-            new_verb = Verb.objects.create(
-                hiragana=hiragana,
-                translation=word[2]
-            )
-            verbs_counter += 1
+        for index, verb in enumerate(verbs_data):
+            hiragana = verb[1]
+            if index == 0: # Verb 'DESU' is an exception and has no group (maybe fill up the cell with a 0 value)
+                Verb.objects.get_or_create(hiragana=hiragana, translation=verb[2])
+            else:
+                defaults = {'group': verb[0], 'translation': verb[2]}
+                new_verb, created = Verb.objects.get_or_create(
+                    hiragana=hiragana,
+                    defaults=defaults
+                )
+                Word.objects.filter(hiragana=hiragana).first().delete()
+                if created:
+                    verbs_counter += 1
+        self.stdout.write(self.style.SUCCESS("Successfully updated %s verbs" % verbs_counter))
 
         adjectives_counter = 0
 

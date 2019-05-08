@@ -12,6 +12,7 @@ class Word(models.Model):
     def __str__(self):
         return self.hiragana
 
+    @property
     def type(self):
         return self.__class__.__name__
 
