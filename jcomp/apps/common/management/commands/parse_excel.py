@@ -34,27 +34,34 @@ class Command(BaseCommand):
         
         word_counter = 0
         for word in vocabulary_data:
-            defaults = {'translation': word[1]}
-            # TODO: FIX, get returns 2 models
-            new_word, created = Word.objects.get_or_create(
+            translation = word[1]
+            type = word[2] if 2 < len(word) else None
+            source = word[3] if 3 < len(word) else None
+            new_word = Word.objects.filter(
                 hiragana=word[0],
-                defaults=defaults
+                verb__isnull=True,
+                adjective__isnull=True
             )
-            if created:
-                type = word[2] if 2 < len(word) else None
-                new_word.source = word[3] if 3 < len(word) else None
-                new_word.save()
+            if not new_word:
+                Word.objects.create(hiragana=word[0], translation=translation,
+                                    # type=type,
+                                    source=source)
                 word_counter += 1
 
         self.stdout.write(self.style.SUCCESS("Successfully created %s words" % word_counter))
 
         verbs_counter = 0
+        # TODO: Change algorithm:
+        #  -> Current: Creates Verb first, then searches and deletes Word
+        #  -> Desired: Search and delete Word first, then create Verb
         for index, verb in enumerate(verbs_data):
             hiragana = verb[1]
+
             if index == 0: # Verb 'DESU' is an exception and has no group (maybe fill up the cell with a 0 value)
-                Verb.objects.get_or_create(hiragana=hiragana, translation=verb[2])
+                Verb.objects.create(hiragana=hiragana, translation=verb[2])
             else:
                 defaults = {'group': verb[0], 'translation': verb[2]}
+                
                 new_verb, created = Verb.objects.get_or_create(
                     hiragana=hiragana,
                     defaults=defaults
@@ -62,6 +69,7 @@ class Command(BaseCommand):
                 Word.objects.filter(hiragana=hiragana).first().delete()
                 if created:
                     verbs_counter += 1
+
         self.stdout.write(self.style.SUCCESS("Successfully updated %s verbs" % verbs_counter))
 
         adjectives_counter = 0

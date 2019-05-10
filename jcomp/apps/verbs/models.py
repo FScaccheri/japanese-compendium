@@ -6,4 +6,4 @@ class Verb(Word):
     group = models.PositiveIntegerField(null=True, blank=True)
 
     def type(self):
-        return self.__class__.__name__
+        return self.__class__.__name__.lower()

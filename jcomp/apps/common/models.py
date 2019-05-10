@@ -14,7 +14,7 @@ class Word(models.Model):
 
     @property
     def type(self):
-        return self.__class__.__name__
+        return self.__class__.__name__.lower()
 
     def type_color(self):
         '''
