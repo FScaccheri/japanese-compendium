@@ -4,3 +4,5 @@ db.sqlite3
 comp.json
 *.xlsx
 *.png
+
+japanese-compendium/*
