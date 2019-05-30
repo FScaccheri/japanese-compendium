@@ -4,5 +4,6 @@ db.sqlite3
 comp.json
 *.xlsx
 *.png
+__pycache__/*
 
 japanese-compendium/*
