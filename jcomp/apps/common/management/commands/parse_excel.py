@@ -31,42 +31,44 @@ class Command(BaseCommand):
         verbs_data = data['verbs']
         adjectives_data = data['adjectives']
         kanji_data = data['kanji']
-        
+
+        verbs_hiragana_list = [verb[1] for verb in verbs_data]
+        adjectives_hiragana_list = [adjective[1] for adjective in adjectives_data]
+
         word_counter = 0
         for word in vocabulary_data:
-            translation = word[1]
-            type = word[2] if 2 < len(word) else None
-            source = word[3] if 3 < len(word) else None
-            new_word = Word.objects.filter(
-                hiragana=word[0],
-                verb__isnull=True,
-                adjective__isnull=True
-            )
-            if not new_word:
-                Word.objects.create(hiragana=word[0], translation=translation,
-                                    # type=type,
-                                    source=source)
-                word_counter += 1
+            word_hiragana = word[0]
+            # Check they are not present in Verbs or Adjectives
+            if word_hiragana not in verbs_hiragana_list + adjectives_hiragana_list:
+                translation = word[1]
+                type = word[2] if 2 < len(word) else None
+                source = word[3] if 3 < len(word) else None
+                new_word = Word.objects.filter(
+                    hiragana=word_hiragana,
+                    verb__isnull=True,
+                    adjective__isnull=True
+                )
+                if not new_word:
+                    Word.objects.create(hiragana=word[0], translation=translation,
+                                        # type=type,
+                                        source=source)
+                    word_counter += 1
 
         self.stdout.write(self.style.SUCCESS("Successfully created %s words" % word_counter))
 
         verbs_counter = 0
-        # TODO: Change algorithm:
-        #  -> Current: Creates Verb first, then searches and deletes Word
-        #  -> Desired: Search and delete Word first, then create Verb
         for index, verb in enumerate(verbs_data):
             hiragana = verb[1]
-
             if index == 0: # Verb 'DESU' is an exception and has no group (maybe fill up the cell with a 0 value)
-                Verb.objects.create(hiragana=hiragana, translation=verb[2])
+                Verb.objects.get_or_create(hiragana=hiragana, translation=verb[2])
             else:
+
                 defaults = {'group': verb[0], 'translation': verb[2]}
                 
                 new_verb, created = Verb.objects.get_or_create(
                     hiragana=hiragana,
                     defaults=defaults
                 )
-                Word.objects.filter(hiragana=hiragana).first().delete()
                 if created:
                     verbs_counter += 1
 
@@ -75,9 +77,6 @@ class Command(BaseCommand):
         adjectives_counter = 0
 
 
-        # TODO: >create Words ONLY from words sheet of excel.
-        #  >Complete remaining Verb and Adjective fields from other sheets.
-        #  >Search for existing word, replace it with new Verb/Adjective object
-        #  and delete the old one
+        # TODO:
         #  >Create Kanji from kanji sheet of excel
 
