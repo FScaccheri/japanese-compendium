@@ -14,12 +14,8 @@ class VocabularyListView(ListView):
     def get_context_data(self, **kwargs):
         context = super(VocabularyListView, self).get_context_data(**kwargs)
         context.update({
-            'verbs_list': Verb.objects.all(),
-            'adjectives_list': Adjective.objects.all(),
+            'vocabulary_list': Word.objects.vocabulary_list()
         })
-        # TODO: this idea is correct but doesn't work
-        #  To correct it create method for custom Word model manager
-        #  that returns a 'correct' query with all objects (Words, Adjectives, Verbs)
         return context
-
+        
     # TODO: Create details views
