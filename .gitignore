@@ -1,5 +1,6 @@
 *.pyc
 .idea
+.vscode
 db.sqlite3
 comp.json
 *.xlsx

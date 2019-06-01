@@ -39,6 +39,7 @@ class Command(BaseCommand):
         for word in vocabulary_data:
             word_hiragana = word[0]
             # Check they are not present in Verbs or Adjectives
+            # Maybe refactor this
             if word_hiragana not in verbs_hiragana_list + adjectives_hiragana_list:
                 translation = word[1]
                 type = word[2] if 2 < len(word) else None
@@ -65,18 +66,27 @@ class Command(BaseCommand):
 
                 defaults = {'group': verb[0], 'translation': verb[2]}
                 
-                new_verb, created = Verb.objects.get_or_create(
+                created = Verb.objects.get_or_create(
                     hiragana=hiragana,
                     defaults=defaults
-                )
+                )[1]
                 if created:
                     verbs_counter += 1
 
         self.stdout.write(self.style.SUCCESS("Successfully updated %s verbs" % verbs_counter))
 
         adjectives_counter = 0
-
+        for adjective in adjectives_data:
+            hiragana = adjective[1]
+            defaults = {'group': adjective[0], 'translation': adjective[2]}
+            created = Adjective.objects.get_or_create(
+                hiragana=hiragana,
+                defaults=defaults
+            )[1]
+            if created:
+                adjectives_counter += 1
+        
+        self.stdout.write(self.style.SUCCESS("Successfully updated %s adjectives" % adjectives_counter))
 
         # TODO:
         #  >Create Kanji from kanji sheet of excel
-
