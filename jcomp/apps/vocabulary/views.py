@@ -7,15 +7,10 @@ from jcomp.apps.adjectives.models import Adjective
 
 class VocabularyListView(ListView):
     model = Word
-    paginate_by = 30
+    paginate_by = 50
     template_name = 'vocabulary_list.html'
     context_object_name = 'words_list'
 
-    def get_context_data(self, **kwargs):
-        context = super(VocabularyListView, self).get_context_data(**kwargs)
-        context.update({
-            'vocabulary_list': Word.objects.vocabulary_list()
-        })
-        return context
-        
+    def get_queryset(self):
+        return Word.objects.vocabulary_list()
     # TODO: Create details views
