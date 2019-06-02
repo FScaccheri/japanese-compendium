@@ -1,21 +1,32 @@
 from itertools import chain
 from django.db import models
+from django.db.models import Q
 from jcomp.apps.kanji.models import Kanji
 
 
 class WordManager(models.Manager):
+    # Man this some fucked up shit right here
     def vocabulary_list(self):
         from jcomp.apps.verbs.models import Verb
         from jcomp.apps.adjectives.models import Adjective
 
-        verbs = Verb.objects.all()
-        adjectives = Adjective.objects.all()
+        words = list(Word.objects.all())
+        verbs = list(Verb.objects.all())
+        adjectives = list(Adjective.objects.all())
 
         verbs_list = [verb.hiragana for verb in verbs]
         adjectives_list = [adjective.hiragana for adjective in adjectives]
-        words = Word.objects.exclude(hiragana__in=(verbs_list + adjectives_list))
-
-        full_list = list(chain(words, verbs, adjectives))
+        verb_and_adj_list = verbs_list + adjectives_list
+        
+        full_list = words.copy()
+        for word in words:
+            index = words.index(word)
+            if word.hiragana in verbs_list:
+                full_list[index] = Verb.objects.get(hiragana=word.hiragana)
+            if word.hiragana in adjectives_list:
+                full_list[index] = Adjective.objects.get(hiragana=word.hiragana)
+        
+        full_list.reverse()
         return full_list
 
 
@@ -39,4 +50,4 @@ class Word(models.Model):
         '''
         Bootstrap html class for styling a word row based on its type
         '''
-        return "table-secondary"
+        return "table-primary"

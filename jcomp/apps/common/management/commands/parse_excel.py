@@ -40,20 +40,20 @@ class Command(BaseCommand):
             word_hiragana = word[0]
             # Check they are not present in Verbs or Adjectives
             # Maybe refactor this
-            if word_hiragana not in verbs_hiragana_list + adjectives_hiragana_list:
-                translation = word[1]
-                type = word[2] if 2 < len(word) else None
-                source = word[3] if 3 < len(word) else None
-                new_word = Word.objects.filter(
-                    hiragana=word_hiragana,
-                    verb__isnull=True,
-                    adjective__isnull=True
-                )
-                if not new_word:
-                    Word.objects.create(hiragana=word[0], translation=translation,
-                                        # type=type,
-                                        source=source)
-                    word_counter += 1
+            
+            translation = word[1]
+            type = word[2] if 2 < len(word) else None
+            source = word[3] if 3 < len(word) else None
+            new_word = Word.objects.filter(
+                hiragana=word_hiragana,
+                verb__isnull=True,
+                adjective__isnull=True
+            )
+            if not new_word:
+                Word.objects.create(hiragana=word[0], translation=translation,
+                                    # type=type,
+                                    source=source)
+                word_counter += 1
 
         self.stdout.write(self.style.SUCCESS("Successfully created %s words" % word_counter))
 

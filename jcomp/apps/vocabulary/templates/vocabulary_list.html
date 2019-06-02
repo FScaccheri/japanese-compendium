@@ -15,16 +15,16 @@
     <table class="table table-bordered table-hover">
         <thead class="thead-dark">
             <tr>
-              <th scope="col">かな</th>
-              <th scope="col">いみ</th>
-              <th scope="col">Tipo</th>
-              <th scope="col">Fuente</th>
+              <th class="col-md-3"scope="col">かな</th>
+              <th class="col-md-5" scope="col">いみ</th>
+              <th class="col-md-1" scope="col">Tipo</th>
+              <th class="col-md-1" scope="col">Fuente</th>
             </tr>
       </thead>
       <tbody>
         {% for word in words_list %}
         <tr class="{{ word.type_color }}">
-          <th scope="row">{{ word.hiragana }}</th>
+          <th  scope="row">{{ word.hiragana }}</th>
           <td>{{ word.translation }}</td>
           <td>{{ word.type }}</td>
           <td>{% if word.source%} {{ word.source }} {% endif %}</td>
