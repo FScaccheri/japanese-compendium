@@ -12,5 +12,5 @@ class VocabularyListView(ListView):
     context_object_name = 'words_list'
 
     def get_queryset(self):
-        return Word.objects.vocabulary_list()
+        return Word.objects.vocabulary_list()        
     # TODO: Create details views

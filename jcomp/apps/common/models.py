@@ -10,13 +10,14 @@ class WordManager(models.Manager):
         from jcomp.apps.verbs.models import Verb
         from jcomp.apps.adjectives.models import Adjective
 
-        words = list(Word.objects.all())
+        words = list(Word.objects.filter(
+            verb__isnull=True,
+            adjective__isnull=True))
         verbs = list(Verb.objects.all())
         adjectives = list(Adjective.objects.all())
 
         verbs_list = [verb.hiragana for verb in verbs]
         adjectives_list = [adjective.hiragana for adjective in adjectives]
-        verb_and_adj_list = verbs_list + adjectives_list
         
         full_list = words.copy()
         for word in words:
