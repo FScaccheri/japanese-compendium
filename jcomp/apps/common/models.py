@@ -27,7 +27,7 @@ class WordManager(models.Manager):
             if word.hiragana in adjectives_list:
                 full_list[index] = Adjective.objects.get(hiragana=word.hiragana)
         
-        full_list.reverse()
+        #full_list.reverse()
         return full_list
 
 
@@ -42,6 +42,9 @@ class Word(models.Model):
 
     def __str__(self):
         return self.hiragana
+
+    class Meta:
+        ordering = ['-id']
 
     @property
     def type(self):

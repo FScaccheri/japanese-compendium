@@ -8,4 +8,33 @@
     <h1>どうし</h1>
 </div>
 
+<div>
+
+    {% include 'includes/paginator_nav.html' %}
+
+    <table class="table table-bordered table-hover">
+        <thead class="thead-dark">
+            <tr>
+              <th class="col-md-3"scope="col">かな</th>
+              <th class="col-md-5" scope="col">いみ</th>
+              <th class="col-md-1" scope="col">Tipo</th>
+              <th class="col-md-1" scope="col">Fuente</th>
+            </tr>
+      </thead>
+      <tbody>
+        {% for verb in verbs_list %}
+        <tr class="{{ verb.type_color }}">
+          <th  scope="row">{{ verb.hiragana }}</th>
+          <td>{{ verb.translation }}</td>
+          <td>{{ verb.type }}</td>
+          <td>{% if verb.source%} {{ verb.source }} {% endif %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    {% include 'includes/paginator_nav.html' %}
+
+</div>
+
 {% endblock %}

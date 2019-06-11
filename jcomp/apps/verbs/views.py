@@ -5,5 +5,6 @@ from .models import Verb
 
 class VerbListView(ListView):
     model = Verb
-    #paginate_by = 50
+    paginate_by = 50
     template_name = 'verb_list.html'
+    context_object_name = 'verbs_list'
