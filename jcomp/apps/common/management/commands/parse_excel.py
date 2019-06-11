@@ -13,8 +13,11 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument('file_name')
+        parser.add_argument('rows_offset', nargs='?', default=0, type=int)
 
     def handle(self, *args, **options):
+        offset = options['rows_offset'] - 1
+
         try:
             file_name = options.get('file_name')
         except Exception:
@@ -26,11 +29,13 @@ class Command(BaseCommand):
                                                  'but it was correctly added.'))
 
         data = get_data(file_name)
+        #print(json.dumps(data))
 
-        vocabulary_data = data['vocabulary']
-        verbs_data = data['verbs']
-        adjectives_data = data['adjectives']
-        kanji_data = data['kanji']
+
+        vocabulary_data = list(filter(None, data['ごい'][offset:]))
+        verbs_data = list(filter(None, data['どうし'][offset:]))
+        adjectives_data = list(filter(None, data['けいようし'][offset:]))
+        kanji_data = list(filter(None, data['かんじ'][offset:]))
 
         verbs_hiragana_list = [verb[1] for verb in verbs_data]
         adjectives_hiragana_list = [adjective[1] for adjective in adjectives_data]
