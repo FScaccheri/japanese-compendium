@@ -35,7 +35,7 @@ class Command(BaseCommand):
         vocabulary_data = list(filter(None, data['ごい'][offset:]))
         verbs_data = list(filter(None, data['どうし'][offset:]))
         adjectives_data = list(filter(None, data['けいようし'][offset:]))
-        kanji_data = list(filter(None, data['かんじ'][offset:]))
+        kanji_data = list(filter(None, data['かんじ'][2:]))
 
         verbs_hiragana_list = [verb[1] for verb in verbs_data]
         adjectives_hiragana_list = [adjective[1] for adjective in adjectives_data]
