@@ -30,12 +30,28 @@ class Command(BaseCommand):
 
         data = get_data(file_name)
         #print(json.dumps(data))
+        
+        # Yikes
+        # TODO: fix, 'ValueError: 'int' is not callable'
+        try:
+            vocabulary_data = list(filter(None, data['vocabulary'][offset:]))
+        except KeyError:
+            vocabulary_data = list(filter(None, data['ごい'][offset:]))
+        
+        try:
+            verbs_data = list(filter(None, data['verbs'][offset:]))
+        except KeyError:
+            verbs_data = list(filter(None, data['どうし'][offset:]))
 
-
-        vocabulary_data = list(filter(None, data['ごい'][offset:]))
-        verbs_data = list(filter(None, data['どうし'][offset:]))
-        adjectives_data = list(filter(None, data['けいようし'][offset:]))
-        kanji_data = list(filter(None, data['かんじ'][2:]))
+        try:
+            adjectives_data = list(filter(None, data['adjectives'][offset:]))
+        except KeyError:
+            adjectives_data = list(filter(None, data['けいようし'][offset:]))
+        
+        try:
+            kanji_data = list(filter(None, data['kanji'][2:]))
+        except KeyError:
+            kanji_data = list(filter(None, data['かんじ'][2:]))
 
         verbs_hiragana_list = [verb[1] for verb in verbs_data]
         adjectives_hiragana_list = [adjective[1] for adjective in adjectives_data]
@@ -43,7 +59,6 @@ class Command(BaseCommand):
         word_counter = 0
         for word in vocabulary_data:
             word_hiragana = word[0]
-            # Check they are not present in Verbs or Adjectives
             # Maybe refactor this
             
             translation = word[1]
