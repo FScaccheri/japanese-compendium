@@ -51,7 +51,7 @@ LOCAL_APPS = [
     'jcomp.apps.kanji',
 ]
 
-INSTALLED_APPS += LOCAL_APPS
+INSTALLED_APPS += LOCAL_APPS + VENDOR_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
