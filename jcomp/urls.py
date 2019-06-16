@@ -24,4 +24,5 @@ urlpatterns = [
     re_path(r'^', include('jcomp.apps.verbs.urls')),
     re_path(r'^', include('jcomp.apps.adjectives.urls')),
     re_path(r'^', include('jcomp.apps.kanji.urls')),
+    re_path(r'^search/', include('haystack.urls')),
 ]

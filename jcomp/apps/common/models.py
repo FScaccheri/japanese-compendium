@@ -5,7 +5,7 @@ from jcomp.apps.kanji.models import Kanji
 
 
 class WordManager(models.Manager):
-    # Man this some fucked up shit right here
+    # Man this is some fucked up shit right here
     def vocabulary_list(self):
         from jcomp.apps.verbs.models import Verb
         from jcomp.apps.adjectives.models import Adjective
