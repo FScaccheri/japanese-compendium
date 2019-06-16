@@ -9,8 +9,8 @@
                 <span class="sr-only">Previous</span>
             </a>
         </li>
-        {% endif %}{{ page_obj.number}}
-        {% for index in index|rjust:page_obj.paginator.num_pages %}
+        {% endif %}
+        {% for index in page_obj.paginator.page_range %}
         {% if page_obj.number == forloop.counter %}
         <li class="page-item active">
             <span class="page-link">
