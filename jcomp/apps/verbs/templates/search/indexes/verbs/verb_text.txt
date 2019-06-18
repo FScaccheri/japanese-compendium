@@ -1,0 +1,3 @@
+{{ object.hiragana }}
+{{ object.romaji }}
+{{ object.translation }}
