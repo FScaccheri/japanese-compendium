@@ -13,7 +13,7 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument('file_name')
-        parser.add_argument('rows_offset', nargs='?', default=0, type=int)
+        parser.add_argument('rows_offset', nargs='?', default=1, type=int)
 
     def handle(self, *args, **options):
         offset = options['rows_offset'] - 1
