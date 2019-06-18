@@ -1,4 +1,6 @@
 from itertools import chain
+
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import Q
 from jcomp.apps.kanji.models import Kanji
@@ -43,6 +45,18 @@ class Word(models.Model):
     def __str__(self):
         return self.hiragana
 
+    def clean(self):
+        if not self.hiragana:
+            self.romaji_to_kana()
+        elif not self.romaji:
+            self.kana_to_romaji()
+        elif not self.hiragana and not self.romaji:
+            raise ValidationError("You have to enter either the Hiragana or Romaji of a Word")
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super(Word, self).save(*args, **kwargs)
+
     class Meta:
         ordering = ['-id']
 
@@ -55,3 +69,13 @@ class Word(models.Model):
         Bootstrap html class for styling a word row based on its type
         '''
         return "table-primary"
+
+    def romaji_to_kana(self):
+        romaji = self.romaji
+        # Translate syllable by syllable
+        self.hiragana = "ひらがな"
+
+    def kana_to_romaji(self):
+        kana = self.hiragana
+        # Translate kana by kana
+        self.romaji = "romaji"
