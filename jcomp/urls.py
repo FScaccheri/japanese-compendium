@@ -20,9 +20,9 @@ from django.urls import path, re_path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     re_path(r'^', include('jcomp.apps.common.urls')),
-    re_path(r'^', include('jcomp.apps.vocabulary.urls')),
-    re_path(r'^', include('jcomp.apps.verbs.urls')),
-    re_path(r'^', include('jcomp.apps.adjectives.urls')),
-    re_path(r'^', include('jcomp.apps.kanji.urls')),
+    re_path(r'^vocabulary/', include('jcomp.apps.vocabulary.urls')),
+    re_path(r'^verbs/', include('jcomp.apps.verbs.urls')),
+    re_path(r'^adjectives/', include('jcomp.apps.adjectives.urls')),
+    re_path(r'^kanji/', include('jcomp.apps.kanji.urls')),
     re_path(r'^search/', include('haystack.urls')),
 ]
