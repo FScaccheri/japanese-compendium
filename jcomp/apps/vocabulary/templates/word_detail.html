@@ -1,0 +1,14 @@
+{% extends 'base_detail.html' %}
+
+{% block title %}<title>J-Comp ~~~ {{ word.hiragana }}</title>{% endblock %}
+
+{% block body %}
+
+<div align="center">
+    <h1>{{ word.hiragana }}</h1>
+
+    <span>{{ word.romaji }}</span>
+    <span>{{ word.translation }}</span>
+</div>
+
+{% endblock %}

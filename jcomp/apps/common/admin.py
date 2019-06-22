@@ -3,7 +3,7 @@ from .models import Word
 
 
 class WordAdmin(admin.ModelAdmin):
-    pass
+    prepopulated_fields = {"slug": ("romaji",)}
 
 
 admin.site.register(Word, WordAdmin)

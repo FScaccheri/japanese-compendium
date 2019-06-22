@@ -1,6 +1,7 @@
 from itertools import chain
 
 import romkan
+from django.utils.text import slugify
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import Q
@@ -41,6 +42,7 @@ class Word(models.Model):
     kanji = models.ForeignKey(Kanji, null=True, blank=True, on_delete=models.CASCADE, related_name='lectures')
     translation = models.CharField(max_length=100, null=True)
     source = models.CharField(max_length=50, blank=True, null=True)
+    slug = models.SlugField(default="slug")
 
     objects = WordManager()
 
@@ -51,9 +53,11 @@ class Word(models.Model):
         if not self.hiragana:
             self.hiragana = romkan.to_hiragana(self.romaji)
         elif not self.romaji:
-            self.romaji = romkan.to_roma(self.hiragana)
+            self.romaji = romkan.to_roma(self.hiragana).capitalize()
         elif not self.hiragana and not self.romaji:
             raise ValidationError("You have to enter either the Hiragana or Romaji of a Word")
+
+        self.slug = slugify(self.romaji)
 
     def save(self, *args, **kwargs):
         self.full_clean()
