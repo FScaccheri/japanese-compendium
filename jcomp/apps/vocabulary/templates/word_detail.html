@@ -1,14 +1,16 @@
 {% extends 'base_detail.html' %}
+{% load static %}
 
 {% block title %}<title>J-Comp ~~~ {{ word.hiragana }}</title>{% endblock %}
 
 {% block body %}
 
 <div align="center">
-    <h1>{{ word.hiragana }}</h1>
-
-    <span>{{ word.romaji }}</span>
-    <span>{{ word.translation }}</span>
+    <div display="inline">
+        <h1 id="wordName" data-toggle={{ word.romaji }}>{{ word.hiragana }}</h1>
+        <button onClick="toggleRomKan()"><img src="{% static "romkan.png" %}" width="50" height="50"></button>
+    </div>
+    <p>{{ word.translation }}</p>
 </div>
 
 {% endblock %}

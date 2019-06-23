@@ -7,4 +7,3 @@ class WordAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Word, WordAdmin)
-
