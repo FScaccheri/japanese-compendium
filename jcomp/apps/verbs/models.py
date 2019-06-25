@@ -12,4 +12,4 @@ class Verb(Word):
         '''
         Bootstrap html class for styling a word row based on its type
         '''
-        return "table-danger"
+        return "danger"

@@ -74,4 +74,4 @@ class Word(models.Model):
         '''
         Bootstrap html class for styling a word row based on its type
         '''
-        return "table-primary"
+        return "primary"

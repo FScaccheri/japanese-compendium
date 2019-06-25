@@ -12,4 +12,4 @@ class Adjective(Word):
         '''
         Bootstrap html class for styling a word row based on its type
         '''
-        return "table-warning"
+        return "warning"

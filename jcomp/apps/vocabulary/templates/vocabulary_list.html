@@ -24,7 +24,7 @@
       <tbody>
         {% for word in words_list %}
         
-        <tr class="{{ word.type_color }}">
+        <tr class="table-{{ word.type_color }}">
           <th  scope="row"><a href="{% url 'word_detail' word.slug %}"> {{ word.hiragana }} </a></th>
           <td>{{ word.translation }}</td>
           <td>{{ word.type }}</td>
