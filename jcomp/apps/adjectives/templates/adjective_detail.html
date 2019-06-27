@@ -1,0 +1,26 @@
+{% extends 'base_detail.html' %}
+{% load static %}
+
+{% block title %}<title>J-Comp ~~~ {{ adjective.hiragana }}</title>{% endblock %}
+
+{% block body %}
+
+<div align="center">
+    <h1>Detalle de {{ adjective.hiragana }}</h1>
+    <br>
+    <a class="btn btn-primary" href="{% url 'vocabulary_list' %}">Volver</a>
+    <br><br>
+    <div class="container">
+        <div class="card border-{{ adjective.type_color }}">
+            <div class="card-header bg-info border-{{ adjective.type_color }} d-flex  flex-row justify-content-between">
+                <h3 class="card-title"><b id="wordName" data-toggle={{ adjective.romaji }}>{{ adjective.hiragana }}</b></h3>
+                <button class="btn btn-outline-warning" onClick="toggleRomKan()"><img src="{% static "romkan.png" %}" width="35" height="35"></button>
+            </div>
+            <div class="card-body d-flex  flex-row justify-content-start text-info">
+                <h4 class="card-text">Traducción: <i>{{ adjective.translation }}</i></h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

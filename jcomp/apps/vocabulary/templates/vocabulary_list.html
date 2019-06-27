@@ -25,7 +25,7 @@
         {% for word in words_list %}
         
         <tr class="table-{{ word.type_color }}">
-          <th  scope="row"><a href="{% url 'word_detail' word.slug %}"> {{ word.hiragana }} </a></th>
+          <th  scope="row"><a href="{% url word.detail_url word.slug %}"> {{ word.hiragana }} </a></th>
           <td>{{ word.translation }}</td>
           <td>{{ word.type }}</td>
           <td>{% if word.source%} {{ word.source }} {% endif %}</td>

@@ -68,7 +68,11 @@ class Word(models.Model):
 
     @property
     def type(self):
-        return self.__class__.__name__
+        return self.__class__.__name__.lower()
+
+    @property
+    def detail_url(self):
+        return self.type + "_detail"
 
     def type_color(self):
         '''
