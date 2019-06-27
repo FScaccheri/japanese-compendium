@@ -28,7 +28,7 @@
           <th  scope="row"><a href="{% url word.detail_url word.slug %}"> {{ word.hiragana }} </a></th>
           <td>{{ word.translation }}</td>
           <td>{{ word.type }}</td>
-          <td>{% if word.source%} {{ word.source }} {% endif %}</td>
+          <td>{% if word.source %} {{ word.source }} {% endif %}</td>
         </tr>
        
         {% endfor %}
