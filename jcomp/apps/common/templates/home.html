@@ -1,20 +1,25 @@
 {% extends 'base.html' %}
 
 {% block body %}
-
-    <div align="center">
-        <h2>Welcome to the Japanese Compendium!</h2>
-        <h2>J-Comp へ　ようこぞ!</h2>
-    </div>
-
-    <div align="center">
-        <a class="btn btn-primary" role="button" href="{% url 'vocabulary_list' %}">ごい　ー　Vocabulary</a>
-
-        <a class="btn btn-primary" role="button" href="{% url 'verbs_list' %}">どうし　ー　Verbs</a>
-
-        <a class="btn btn-primary" role="button" href="{% url 'adjectives_list' %}">けいようし　ー　Adjectives</a>
-
-        <a class="btn btn-primary" role="button" href="{% url 'kanji_list' %}">かんじ　ー Kanji</a>
+    
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">Welcome to the Japanese Compendium!</h1>
+            <p class="lead">J-Comp へ　ようこぞ!</p>
+            <hr class="my-4">
+            <span class="lead">
+                <a class="btn btn-primary" role="button" href="{% url 'vocabulary_list' %}">ごい　ー　Vocabulary</a>
+            </span>
+            <span class="lead">
+                <a class="btn btn-primary" role="button" href="{% url 'verbs_list' %}">どうし　ー　Verbs</a>
+            </span>
+            <span class="lead">
+                <a class="btn btn-primary" role="button" href="{% url 'adjectives_list' %}">けいようし　ー　Adjectives</a>
+            </span>
+            <span class="lead">
+                <a class="btn btn-primary" role="button" href="{% url 'kanji_list' %}">かんじ　ー Kanji</a>
+            </span>
+        </div>
     </div>
 
 {% endblock %}
