@@ -8,3 +8,4 @@ comp.json
 __pycache__/*
 
 japanese-compendium/*
+.env

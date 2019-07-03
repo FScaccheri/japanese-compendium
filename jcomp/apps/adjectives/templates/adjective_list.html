@@ -8,4 +8,35 @@
     <h1>けいようし</h1>
 </div>
 
+<div>
+
+    {% include 'includes/paginator_nav.html' %}
+
+    <table class="table table-bordered table-hover">
+        <thead class="thead-dark">
+            <tr>
+              <th class="col-md-3"scope="col">かな</th>
+              <th class="col-md-5" scope="col">いみ</th>
+              <th class="col-md-1" scope="col">Tipo</th>
+              <th class="col-md-1" scope="col">Fuente</th>
+            </tr>
+      </thead>
+      <tbody>
+        {% for adjective in adjectives_list %}
+
+        <tr class="table-{{ adjective.type_color }}">
+          <th  scope="row"><a href="{% url adjective.detail_url adjective.slug %}"> {{ adjective.hiragana }} </a></th>
+          <td>{{ adjective.translation }}</td>
+          <td>{{ adjective.type }}</td>
+          <td>{% if adjective.source %} {{ adjective.source }} {% endif %}</td>
+        </tr>
+
+        {% endfor %}
+      </tbody>
+    </table>
+
+    {% include 'includes/paginator_nav.html' %}
+
+</div>
+
 {% endblock %}

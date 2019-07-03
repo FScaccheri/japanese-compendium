@@ -23,12 +23,14 @@
       </thead>
       <tbody>
         {% for verb in verbs_list %}
-        <tr class="{{ verb.type_color }}">
-          <th  scope="row">{{ verb.hiragana }}</th>
+
+        <tr class="table-{{ verb.type_color }}">
+          <th  scope="row"><a href="{% url verb.detail_url verb.slug %}"> {{ verb.hiragana }} </a></th>
           <td>{{ verb.translation }}</td>
           <td>{{ verb.type }}</td>
-          <td>{% if verb.source%} {{ verb.source }} {% endif %}</td>
+          <td>{% if verb.source %} {{ verb.source }} {% endif %}</td>
         </tr>
+
         {% endfor %}
       </tbody>
     </table>
