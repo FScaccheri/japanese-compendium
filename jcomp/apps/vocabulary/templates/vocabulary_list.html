@@ -2,41 +2,23 @@
 
 {% block title %}<title>J-Comp Vocabulary</title>{% endblock %}
 
-{% block body %}
-
+{% block list_title %}
 <div align="center">
     <h1>ごい</h1>
 </div>
+{% endblock %}
 
-<div>
+{% block table_body %}
+<tbody>
+    {% for word in words_list %}
 
-    {% include 'includes/paginator_nav.html' %}
+    <tr class="table-{{ word.type_color }}">
+        <th  scope="row"><a href="{% url word.detail_url word.slug %}"> {{ word.hiragana }} </a></th>
+        <td>{{ word.translation }}</td>
+        <td>{{ word.type }}</td>
+        <td>{% if word.source %} {{ word.source }} {% endif %}</td>
+    </tr>
 
-    <table class="table table-bordered table-hover">
-        <thead class="thead-dark">
-            <tr>
-              <th class="col-md-3"scope="col">かな</th>
-              <th class="col-md-5" scope="col">いみ</th>
-              <th class="col-md-1" scope="col">Tipo</th>
-              <th class="col-md-1" scope="col">Fuente</th>
-            </tr>
-      </thead>
-      <tbody>
-        {% for word in words_list %}
-        
-        <tr class="table-{{ word.type_color }}">
-          <th  scope="row"><a href="{% url word.detail_url word.slug %}"> {{ word.hiragana }} </a></th>
-          <td>{{ word.translation }}</td>
-          <td>{{ word.type }}</td>
-          <td>{% if word.source %} {{ word.source }} {% endif %}</td>
-        </tr>
-       
-        {% endfor %}
-      </tbody>
-    </table>
-
-    {% include 'includes/paginator_nav.html' %}
-
-</div>
-
+    {% endfor %}
+</tbody>
 {% endblock %}

@@ -2,41 +2,23 @@
 
 {% block title %}<title>J-Comp Verbs</title>{% endblock %}
 
-{% block body %}
-
+{% block list_title %}
 <div align="center">
     <h1>どうし</h1>
 </div>
+{% endblock %}
 
-<div>
+{% block table_body %}
+<tbody>
+    {% for verb in verbs_list %}
 
-    {% include 'includes/paginator_nav.html' %}
+    <tr class="table-{{ verb.type_color }}">
+        <th  scope="row"><a href="{% url verb.detail_url verb.slug %}"> {{ verb.hiragana }} </a></th>
+        <td>{{ verb.translation }}</td>
+        <td>{{ verb.type }}</td>
+        <td>{% if verb.source %} {{ verb.source }} {% endif %}</td>
+    </tr>
 
-    <table class="table table-bordered table-hover">
-        <thead class="thead-dark">
-            <tr>
-              <th class="col-md-3"scope="col">かな</th>
-              <th class="col-md-5" scope="col">いみ</th>
-              <th class="col-md-1" scope="col">Tipo</th>
-              <th class="col-md-1" scope="col">Fuente</th>
-            </tr>
-      </thead>
-      <tbody>
-        {% for verb in verbs_list %}
-
-        <tr class="table-{{ verb.type_color }}">
-          <th  scope="row"><a href="{% url verb.detail_url verb.slug %}"> {{ verb.hiragana }} </a></th>
-          <td>{{ verb.translation }}</td>
-          <td>{{ verb.type }}</td>
-          <td>{% if verb.source %} {{ verb.source }} {% endif %}</td>
-        </tr>
-
-        {% endfor %}
-      </tbody>
-    </table>
-
-    {% include 'includes/paginator_nav.html' %}
-
-</div>
-
+    {% endfor %}
+</tbody>
 {% endblock %}

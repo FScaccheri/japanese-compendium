@@ -1,1 +1,34 @@
 {% extends 'base.html' %}
+
+{% block body %}
+
+{% block list_title %}
+{% endblock %}
+
+<div>
+
+    {% if page_obj.paginator.num_pages > 1%}
+    {% include 'includes/paginator_nav.html' %}
+    {% endif %}
+
+    <table class="table table-bordered table-hover">
+        <thead class="thead-dark">
+            <tr>
+              <th class="col-md-3"scope="col">かな</th>
+              <th class="col-md-5" scope="col">いみ</th>
+              <th class="col-md-1" scope="col">Tipo</th>
+              <th class="col-md-1" scope="col">Fuente</th>
+            </tr>
+        </thead>
+
+        {% block table_body %}
+        {% endblock %}
+    </table>
+
+    {% if page_obj.paginator.num_pages > 1%}
+    {% include 'includes/paginator_nav.html' %}
+    {% endif %}
+
+</div>
+
+{% endblock %}
