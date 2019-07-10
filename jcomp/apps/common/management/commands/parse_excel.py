@@ -26,7 +26,7 @@ class Command(BaseCommand):
         if '.xlsx' not in file_name:
             file_name += '.xlsx'
             self.stdout.write(self.style.WARNING('The entered file name was not the correct format, '
-                                                 'but it was correctly added.'))
+                                                 'but it was correctly parsed.'))
 
         data = get_data(file_name)
         #print(json.dumps(data))
@@ -81,7 +81,7 @@ class Command(BaseCommand):
         for index, verb in enumerate(verbs_data):
             hiragana = verb[1]
             if index == 0: # Verb 'DESU' is an exception and has no group (maybe fill up the cell with a 0 value)
-                Verb.objects.get_or_create(hiragana=hiragana, translation=verb[2])
+                Verb.objects.get_or_create(hiragana=hiragana, translation=verb[2], group=0)
             else:
 
                 defaults = {'group': verb[0], 'translation': verb[2]}
