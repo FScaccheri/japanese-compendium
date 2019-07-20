@@ -3,7 +3,7 @@ import romkan
 
 class VerbConjugator:
 
-    endings_kanas = {
+    normal_roots = {
         "う": "い",
         "く": "き",
         "す": "し",
@@ -14,7 +14,31 @@ class VerbConjugator:
         "る": "り",
         "ぐ": "ぎ",
         "じゅ": "じ",
+    }
 
+    nai_roots = {
+        "う": "わ",
+        "く": "か",
+        "す": "さ",
+        "つ": "た",
+        "ぬ": "な",
+        "ぶ": "ば",
+        "む": "ま",
+        "る": "ら",
+        "ぐ": "が",
+        "じゅ": "じゃ",
+    }
+
+    te_suffixes = {
+        "い": "って",
+        "き": "いて",
+        "し": "して",
+        "ち": "って",
+        "に": "んで",
+        "び": "んで",
+        "み": "んで",
+        "り": "って",
+        "ぎ": "いで",
     }
 
     def __init__(self, verb):
@@ -25,12 +49,12 @@ class VerbConjugator:
         last_kana = self.verb.hiragana[-1]
 
         if self.verb.group == 1:
-            last_kana = self.endings_kanas[last_kana]
+            last_kana = self.normal_roots[last_kana]
             return hiragana + last_kana
         if self.verb.group == 2:
             return hiragana
         if self.verb.group == 3:
-            last_kana = self.endings_kanas[hiragana[-1]]
+            last_kana = self.normal_roots[hiragana[-1]]
             return hiragana[:-1] + last_kana
 
     def to_masu(self):
@@ -59,4 +83,26 @@ class VerbConjugator:
 
     def to_te(self):
         # て　form
-        return "-"
+        if self.verb.group == 0:
+            return "-"
+        
+        if self.verb.group == 1:
+            hiragana = self.verb_root()[:-1]
+            last_kana = self.verb_root()[-1]
+            print(hiragana)
+            te_suffix = self.te_suffixes[last_kana]
+            return hiragana + te_suffix
+        
+        return self.verb_root() + "て"
+
+    def to_nai(self):
+        # Informal negative
+        if self.verb.group == 0:
+            return "ではない"
+        return self.verb_root() + "ない"
+
+    def to_nakatta(self):
+        # Informal negative past
+        if self.verb.group == 0:
+            return " - "
+        return self.verb_root() + "なかった"
