@@ -87,9 +87,12 @@ class VerbConjugator:
             return "-"
         
         if self.verb.group == 1:
+            # Exception:
+            if self.verb.hiragana == "いく":
+                return "いって"
+                
             hiragana = self.verb_root()[:-1]
             last_kana = self.verb_root()[-1]
-            print(hiragana)
             te_suffix = self.te_suffixes[last_kana]
             return hiragana + te_suffix
         
