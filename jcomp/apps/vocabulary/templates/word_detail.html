@@ -15,7 +15,7 @@
         <div class="card border-info">
             <div class="card-header bg-{{ word.type_color }} border-info d-flex  flex-row justify-content-between">
                 <h3 class="card-title"><b id="wordName" data-toggle={{ word.romaji }}>{{ word.hiragana }}</b></h3>
-                <button class="btn btn-outline-info" onClick="toggleRomKan()"><img src="{% static "romkan.png" %}" width="35" height="35"></button>
+                <button class="btn btn-outline-info" onClick="toggleRomKan()"><img src="{% static 'romkan.png' %}" width="35" height="35"></button>
             </div>
             <div class="card-body d-flex  flex-row justify-content-start text-info">
                 <h4 class="card-text">Traducción: <i>{{ word.translation }}</i></h4>
