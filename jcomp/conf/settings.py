@@ -40,7 +40,8 @@ INSTALLED_APPS = [
 
 VENDOR_APPS = [
     'whoosh',
-    'haystack'
+    'haystack',
+    'rest_framework',
 ]
 
 LOCAL_APPS = [
