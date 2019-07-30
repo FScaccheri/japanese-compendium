@@ -13,7 +13,7 @@
     {% for verb in verbs_list %}
 
     <tr class="table-{{ verb.type_color }}">
-        <th  scope="row"><a href="{% url verb.detail_url verb.slug %}"> {{ verb.hiragana }} </a></th>
+        <th  scope="row"><a href="{% url 'verb_detail' verb.slug %}"> {{ verb.hiragana }} </a></th>
         <td>{{ verb.translation }}</td>
         <td>{{ verb.type }}</td>
         <td>{% if verb.source %} {{ verb.source }} {% endif %}</td>

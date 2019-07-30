@@ -1,10 +1,8 @@
-from itertools import chain
-
 import romkan
-from django.utils.text import slugify
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.db.models import Q
+from django.utils.text import slugify
+from django.utils.translation import gettext_lazy as _
 
 from jcomp.apps.kanji.models import Kanji
 
@@ -46,6 +44,11 @@ class Word(models.Model):
 
     objects = WordManager()
 
+    class Meta:
+        verbose_name = _("Palabra")
+        verbose_name_plural = _("Palabras")
+        ordering = ['-id']
+
     def __str__(self):
         return self.hiragana
 
@@ -63,16 +66,9 @@ class Word(models.Model):
         self.full_clean()
         super(Word, self).save(*args, **kwargs)
 
-    class Meta:
-        ordering = ['-id']
-
     @property
     def type(self):
-        return self.__class__.__name__.lower()
-
-    @property
-    def detail_url(self):
-        return self.type + "_detail"
+        return self._meta.verbose_name
 
     def type_color(self):
         '''

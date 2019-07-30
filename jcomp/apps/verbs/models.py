@@ -1,17 +1,19 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
+
 from jcomp.apps.common.models import Word
 
 
 class Verb(Word):
     group = models.PositiveIntegerField(null=True, blank=True)
 
-    @property
-    def type(self):
-        return self.__class__.__name__.lower()
+    class Meta:
+        verbose_name = _("Verbo")
+        verbose_name_plural = _("Verbos")
 
     @property
-    def detail_url(self):
-        return self.type + "_detail"
+    def type(self):
+        return self._meta.verbose_name
 
     def type_color(self):
         '''

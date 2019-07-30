@@ -1,17 +1,19 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
+
 from jcomp.apps.common.models import Word
 
 
 class Adjective(Word):
     group = models.CharField(max_length=5, null=True)
 
-    @property
-    def type(self):
-        return self.__class__.__name__.lower()
+    class Meta:
+        verbose_name = _("Adjetivo")
+        verbose_name_plural = _("Adjetivos")
 
     @property
-    def detail_url(self):
-        return self.type + "_detail"
+    def type(self):
+        return self._meta.verbose_name
 
     def type_color(self):
         '''

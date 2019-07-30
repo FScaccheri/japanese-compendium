@@ -13,7 +13,7 @@
     {% for adjective in adjectives_list %}
 
     <tr class="table-{{ adjective.type_color }}">
-        <th  scope="row"><a href="{% url adjective.detail_url adjective.slug %}"> {{ adjective.hiragana }} </a></th>
+        <th  scope="row"><a href="{% url 'adjective_detail' adjective.slug %}"> {{ adjective.hiragana }} </a></th>
         <td>{{ adjective.translation }}</td>
         <td>{{ adjective.type }}</td>
         <td>{% if adjective.source %} {{ adjective.source }} {% endif %}</td>
