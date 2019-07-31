@@ -9,3 +9,4 @@ __pycache__/*
 
 japanese-compendium/*
 .env
+node_modules
