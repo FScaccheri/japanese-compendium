@@ -50,6 +50,7 @@ LOCAL_APPS = [
     'jcomp.apps.verbs',
     'jcomp.apps.adjectives',
     'jcomp.apps.kanji',
+    'jcomp.apps.frontend',
 ]
 
 INSTALLED_APPS += LOCAL_APPS + VENDOR_APPS

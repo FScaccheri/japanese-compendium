@@ -13,13 +13,14 @@
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "weak-key": "^1.0.1",
     "webpack": "^4.38.0",
     "webpack-cli": "^3.3.6"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack --mode development ./project/frontend/src/index.js --output ./project/frontend/static/frontend/main.js",
-    "build": "webpack --mode production ./project/frontend/src/index.js --output ./project/frontend/static/frontend/main.js"
+    "dev": "webpack --mode development ./jcomp/apps/frontend/src/index.js --output ./jcomp/apps/frontend/static/frontend/main.js",
+    "build": "webpack --mode production ./jcomp/apps/frontend/src/index.js --output ./jcomp/apps/frontend/static/frontend/main.js"
   },
   "repository": {
     "type": "git",
