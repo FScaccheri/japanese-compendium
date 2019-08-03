@@ -1,4 +1,4 @@
-from .settings import *
+from conf.settings.base import *
 
 STATIC_ROOT = "/static/"
 
