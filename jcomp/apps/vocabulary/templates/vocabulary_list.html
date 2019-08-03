@@ -14,7 +14,15 @@
     {% for word in words_list %}
 
     <tr class="table-{{ word.type_color }}">
-        <th  scope="row"><a href="{% url 'word_detail' word.slug %}"> {{ word.hiragana }} </a></th>
+        <th  scope="row">
+            {% if word.type == "Palabra" %}
+                <a href="{% url 'word_detail' word.slug %}"> {{ word.hiragana }}</a>
+            {% elif word.type == "Adjetivo" %}
+                <a href="{% url 'adjective_detail' word.slug %}"> {{ word.hiragana }}</a>
+            {% elif word.type == "Verbo" %}
+                <a href="{% url 'verb_detail' word.slug %}"> {{ word.hiragana }}</a>
+            {% endif %}
+        </th>
         <td>{{ word.translation }}</td>
         <td>{{ word.type }}</td>
         <td>{% if word.source %} {{ word.source }} {% endif %}</td>

@@ -8,5 +8,5 @@ def home_view(request):
 
 
 class WordListCreate(generics.ListCreateAPIView):
-    queryset = Word.objects.vocabulary_list()
+    queryset = Word.objects.all()
     serializer_class = WordSerializer
