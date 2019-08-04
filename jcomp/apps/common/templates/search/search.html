@@ -1,34 +1,51 @@
 {% extends 'base.html' %}
 
+{% block links %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/animations.css' %}">
+{% endblock %}
+
 {% block body %}
-    <h2>Search</h2>
 
-
+<div class=container>
+    <h2>Búsqueda</h2>
 
         {% if query %}
-            <h3>Results</h3>
+            <h3>Resultados</h3>
 
-            {% for result in page.object_list %}
-                <p>
-                    <b>{{ result.object.hiragana }}</b>
-                    -
-                    <b>{{ result.object.romaji }}</b>
-                    -
-                    <b>{{ result.object.translation }}</b>
-                </p>
-            {% empty %}
-                <p>No results found.</p>
-            {% endfor %}
+            <div class="search-results">
 
-            {% if page.has_previous or page.has_next %}
-                <div>
-                    {% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; Previous{% if page.has_previous %}</a>{% endif %}
-                    |
-                    {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}Next &raquo;{% if page.has_next %}</a>{% endif %}
-                </div>
-            {% endif %}
+                {% for result in page.object_list %}
+                    <div class="result col-md-6 ">
+                        <div class="card shadow-drop-2-center">
+                            <a href="{% url 'word_detail' result.object.slug %}">
+                                <div class="card-header">
+                                    <h5>{{ result.object.hiragana }}</h5>
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="card-text">{{ result.object.translation }}</h4>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                
+                {% empty %}
+                    <div class="alert alert-warning" role="alert">
+                        No se encontraron resultados
+                    </div>
+                {% endfor %}
+
+                {% if page.has_previous or page.has_next %}
+                    <div>
+                        {% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; Previous{% if page.has_previous %}</a>{% endif %}
+                        |
+                        {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}Next &raquo;{% if page.has_next %}</a>{% endif %}
+                    </div>
+                {% endif %}
+            </div>
+            
         {% else %}
             {# Show some example queries to run, maybe query syntax, something else? #}
         {% endif %}
-
+</div>
 {% endblock %}
