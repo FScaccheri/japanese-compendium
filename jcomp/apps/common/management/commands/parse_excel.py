@@ -29,10 +29,9 @@ class Command(BaseCommand):
                                                  'but it was correctly parsed.'))
 
         data = get_data(file_name)
-        #print(json.dumps(data))
         
         # Yikes
-        # TODO: fix, 'ValueError: 'int' is not callable'
+        # TODO: Create Words, then replace for Verbs and Adjectives
         try:
             vocabulary_data = list(filter(None, data['vocabulary'][offset:]))
         except KeyError:
