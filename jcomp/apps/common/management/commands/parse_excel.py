@@ -57,55 +57,37 @@ class Command(BaseCommand):
 
         word_counter = 0
         for word in vocabulary_data:
-            word_hiragana = word[0]
+            hiragana = word[0]
             # Maybe refactor this
-            
             translation = word[1]
-            type = word[2] if 2 < len(word) else None
-            source = word[3] if 3 < len(word) else None
-            new_word = Word.objects.filter(
-                hiragana=word_hiragana,
-                verb__isnull=True,
-                adjective__isnull=True
-            )
-            if not new_word:
-                Word.objects.create(hiragana=word[0], translation=translation,
-                                    # type=type,
-                                    source=source)
+            created = Word.objects.get_or_create(hiragana=hiragana, translation=translation)[1]
+            if created:
                 word_counter += 1
 
         self.stdout.write(self.style.SUCCESS("Successfully created %s words" % word_counter))
 
         verbs_counter = 0
-        for index, verb in enumerate(verbs_data):
+        for verb in verbs_data:
             hiragana = verb[1]
-            if index == 0: # Verb 'DESU' is an exception and has no group (maybe fill up the cell with a 0 value)
-                Verb.objects.get_or_create(hiragana=hiragana, translation=verb[2], group=0)
-            else:
+            defaults = {'group': verb[0], 'translation': verb[2]}
+            created = Verb.objects.get_or_create(hiragana=hiragana, defaults=defaults)[1]
+            if created:
+                verbs_counter += 1
 
-                defaults = {'group': verb[0], 'translation': verb[2]}
-                
-                created = Verb.objects.get_or_create(
-                    hiragana=hiragana,
-                    defaults=defaults
-                )[1]
-                if created:
-                    verbs_counter += 1
-
-        self.stdout.write(self.style.SUCCESS("Successfully updated %s verbs" % verbs_counter))
+        self.stdout.write(self.style.SUCCESS("Successfully created %s verbs" % verbs_counter))
 
         adjectives_counter = 0
         for adjective in adjectives_data:
             hiragana = adjective[1]
             defaults = {'group': adjective[0], 'translation': adjective[2]}
-            created = Adjective.objects.get_or_create(
-                hiragana=hiragana,
-                defaults=defaults
-            )[1]
+            created = Adjective.objects.get_or_create(hiragana=hiragana, defaults=defaults)[1]
             if created:
                 adjectives_counter += 1
         
-        self.stdout.write(self.style.SUCCESS("Successfully updated %s adjectives" % adjectives_counter))
+        self.stdout.write(self.style.SUCCESS("Successfully created %s adjectives" % adjectives_counter))
+
+        # Now replace the existing 'repeated' Words with the created Verbs and Adjectives
+        # See WordManager in common.models
 
         # TODO:
         #  >Create Kanji from kanji sheet of excel
