@@ -54,7 +54,9 @@ class Command(BaseCommand):
 
         verbs_hiragana_list = [verb[1] for verb in verbs_data]
         adjectives_hiragana_list = [adjective[1] for adjective in adjectives_data]
-
+        
+        # MUST refactor.
+        # Try to create model 'templates' in lists, then create models in order
         word_counter = 0
         for word in vocabulary_data:
             hiragana = word[0]
@@ -85,9 +87,6 @@ class Command(BaseCommand):
                 adjectives_counter += 1
         
         self.stdout.write(self.style.SUCCESS("Successfully created %s adjectives" % adjectives_counter))
-
-        # Now replace the existing 'repeated' Words with the created Verbs and Adjectives
-        # See WordManager in common.models
 
         # TODO:
         #  >Create Kanji from kanji sheet of excel
