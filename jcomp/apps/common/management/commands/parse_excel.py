@@ -28,35 +28,20 @@ class Command(BaseCommand):
             self.stdout.write(self.style.WARNING('The entered file name was not the correct format, '
                                                  'but it was correctly parsed.'))
 
-        data = get_data(file_name)
-        
-        # Yikes
-        # TODO: Create Words, then replace for Verbs and Adjectives
-        try:
-            vocabulary_data = list(filter(None, data['vocabulary'][offset:]))
-        except KeyError:
-            vocabulary_data = list(filter(None, data['ごい'][offset:]))
-        
-        try:
-            verbs_data = list(filter(None, data['verbs'][offset:]))
-        except KeyError:
-            verbs_data = list(filter(None, data['どうし'][offset:]))
+        self.data = get_data(file_name)
 
-        try:
-            adjectives_data = list(filter(None, data['adjectives'][offset:]))
-        except KeyError:
-            adjectives_data = list(filter(None, data['けいようし'][offset:]))
-        
-        try:
-            kanji_data = list(filter(None, data['kanji'][2:]))
-        except KeyError:
-            kanji_data = list(filter(None, data['かんじ'][2:]))
+        vocabulary_data = self.parse_data_from_excel('vocabulary', 'ごい', offset)
+        verbs_data = self.parse_data_from_excel('verbs', 'どうし', offset)
+        adjectives_data = self.parse_data_from_excel('adjectives', 'けいようし', offset)
+        kanji_data = self.parse_data_from_excel('kanji', 'かんじ', offset)
 
         verbs_hiragana_list = [verb[1] for verb in verbs_data]
         adjectives_hiragana_list = [adjective[1] for adjective in adjectives_data]
-        
-        # MUST refactor.
-        # Try to create model 'templates' in lists, then create models in order
+        verbs = [(verb[1], verb[2]) for verb in verbs_data]
+        adjectives = [(adjective[1], adjective[2]) for adjective in adjectives_data]
+
+        vocabulary =  vocabulary_data.copy()
+
         word_counter = 0
         for word in vocabulary_data:
             hiragana = word[0]
@@ -88,5 +73,10 @@ class Command(BaseCommand):
         
         self.stdout.write(self.style.SUCCESS("Successfully created %s adjectives" % adjectives_counter))
 
-        # TODO:
-        #  >Create Kanji from kanji sheet of excel
+        # TODO: Create Kanji from kanji sheet of excel
+
+    def parse_data_from_excel(self, romaji_key, hiragana_key, offset):
+        try:
+            return list(filter(None, self.data[romaji_key][offset:]))
+        except KeyError:
+            return list(filter(None, self.data[hiragana_key][offset:]))
