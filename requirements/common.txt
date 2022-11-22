@@ -10,7 +10,7 @@ lazy-object-proxy==1.4.1
 lml==0.0.9
 mccabe==0.6.1
 openpyxl==2.5.14
-Pillow==6.2.0
+Pillow==9.3.0
 pyexcel==0.5.13
 pyexcel-io==0.5.17
 pyexcel-xlsx==0.5.7
